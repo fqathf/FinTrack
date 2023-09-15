@@ -11,6 +11,7 @@
                 v-model="form.desc"
                 class="textarea"
                 placeholder="Isi Deskripsi Transaksi Anda di Sini"
+                required
               ></textarea>
             </div>
             <label class="label">Jumlah/Nominal</label>
@@ -20,24 +21,24 @@
                 class="input"
                 type="number"
                 placeholder="Isi Nominal Transaksi"
-              />
+              required/>
             </div>
             <label class="label">Jenis Transaksi</label>
             <div class="control">
               <label class="radio">
-                <input v-model="form.tc_type" type="radio" value="debit" />Debit
+                <input v-model="form.tc_type" type="radio" value="Debit" required/>Debit
               </label>
               <label class="radio">
                 <input
                   v-model="form.tc_type"
                   type="radio"
-                  value="kredit"
-                />Kredit
+                  value="Kredit"
+                required/>Kredit
               </label>
             </div>
             <label class="label">Waktu</label>
             <div class="control">
-              <input v-model="form.date" type="date" name="" id="" />
+              <input v-model="form.date" type="date" name="" id="" required/>
             </div>
             <br />
             <div class="control">
@@ -55,27 +56,32 @@
           </li>
         </ul-->
         <table class="table">
-          <tr>
-            <th scope="col">Deskripsi</th>
-            <th scope="col">Nominal</th>
-            <th scope="col">Jenis Transaksi</th>
-            <th scope="col">Tanggal</th>
-          </tr>
-          <tr>
-            <td v-for="item in inputanForm" :key="item">
-              {{ form.desc }}
-            </td>
-            <td v-for="item in inputanForm" :key="item">
-              {{ form.amount }}
-            </td>
-            <td v-for="item in inputanForm" :key="item">
-              {{ form.tc_type }}
-            </td>
-            <td v-for="item in inputanForm" :key="item">
-              {{ form.date }}
-            </td>
-          </tr>
+          <thead class="thead-light">
+            <tr>
+              <th scope="col">Deskripsi</th>
+              <th scope="col">Nominal</th>
+              <th scope="col">Jenis Transaksi</th>
+              <th scope="col">Tanggal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td v-for="item in inputanForm" :key="item">
+                {{ form.desc }} 
+              </td>
+              <td v-for="item in inputanForm" :key="item">
+                {{ form.amount }}
+              </td>
+              <td v-for="item in inputanForm" :key="item">
+                {{ form.tc_type }}
+              </td>
+              <td v-for="item in inputanForm" :key="item">
+                {{ form.date }}
+              </td>
+            </tr>
+          </tbody>
         </table>
+        <h5 v-for="item in inputanForm" :key="item">Total: {{ form.total }}</h5>
       </div>
     </div>
   </div>
@@ -88,13 +94,13 @@ export default {
   data() {
     return {
       form: {
-        amount: 0,
+        amount: undefined,
         desc: '',
         tc_type: '',
         date: '',
+        total: 0
       },
       inputanForm: [],
-      total: 0,
     }
   },
   methods: {
@@ -103,13 +109,12 @@ export default {
       const item = {
         form: this.form,
       }
+      if(item.form.tc_type == 'Debit'){
+        item.form.total += item.form.amount
+      } else if (item.form.tc_type == 'Kredit'){
+        item.form.total -= item.form.amount
+      }
       this.inputanForm.push(item)
-    },
-    debit() {
-      total += amount
-    },
-    credit() {
-      total -= amount
     },
   },
 }
