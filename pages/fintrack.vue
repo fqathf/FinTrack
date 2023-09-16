@@ -21,24 +21,31 @@
                 class="input"
                 type="number"
                 placeholder="Isi Nominal Transaksi"
-              required/>
+                required
+              />
             </div>
             <label class="label">Jenis Transaksi</label>
             <div class="control">
               <label class="radio">
-                <input v-model="form.tc_type" type="radio" value="Debit" required/>Debit
+                <input
+                  v-model="form.tc_type"
+                  type="radio"
+                  value="Debit"
+                  required
+                />Debit
               </label>
               <label class="radio">
                 <input
                   v-model="form.tc_type"
                   type="radio"
                   value="Kredit"
-                required/>Kredit
+                  required
+                />Kredit
               </label>
             </div>
             <label class="label">Waktu</label>
             <div class="control">
-              <input v-model="form.date" type="date" name="" id="" required/>
+              <input v-model="form.date" type="date" name="" id="" required />
             </div>
             <br />
             <div class="control">
@@ -65,9 +72,10 @@
             </tr>
           </thead>
           <tbody>
+            <!--CardItem /-->
             <tr>
               <td v-for="item in inputanForm" :key="item">
-                {{ form.desc }} 
+                {{ form.desc }}
               </td>
               <td v-for="item in inputanForm" :key="item">
                 {{ form.amount }}
@@ -87,6 +95,8 @@
   </div>
 </template>
 <script>
+/*import CardItem from '@/components/Card/CardItem.vue'*/
+
 export default {
   layout(context) {
     return 'custom'
@@ -98,9 +108,18 @@ export default {
         desc: '',
         tc_type: '',
         date: '',
-        total: 0
+        total: 0,
       },
       inputanForm: [],
+      /*forms: [
+        {
+          amount: 500000,
+          desc: 'Tabungan',
+          tc_type: 'Debit',
+          date: '2023-09-16',
+          total: 500000,
+        },
+      ],*/
     }
   },
   methods: {
@@ -109,13 +128,27 @@ export default {
       const item = {
         form: this.form,
       }
-      if(item.form.tc_type == 'Debit'){
-        item.form.total += item.form.amount
-      } else if (item.form.tc_type == 'Kredit'){
+      if (item.form.tc_type == 'Debit') {
+        item.form.total += parseInt(item.form.amount)
+      } else if (item.form.tc_type == 'Kredit') {
         item.form.total -= item.form.amount
       }
       this.inputanForm.push(item)
     },
   },
+  /*computed: {
+    resultQuery() {
+      if (this.searchQuery) {
+        return this.form.filter((item) => {
+          return this.searchQuery.toLowerCase
+            .split(' ')
+            .every((v) => item.title.toLowerCase().include(v))
+        })
+      } else {
+        console.log(this.forms)
+        return this.forms
+      }
+    },
+  },*/
 }
 </script>
