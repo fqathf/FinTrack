@@ -1,26 +1,22 @@
 <template>
-  <tr>
-    <td v-for="item in inputanForm" :key="item">
-      {{ form.desc }}
-    </td>
-    <td v-for="item in inputanForm" :key="item">
-      {{ form.amount }}
-    </td>
-    <td v-for="item in inputanForm" :key="item">
-      {{ form.tc_type }}
-    </td>
-    <td v-for="item in inputanForm" :key="item">
-      {{ form.date }}
-    </td>
-  </tr>
+  <b-card
+    v-bind:img-src="article.img"
+    img-alt="Card image"
+    img-top
+  >
+    <b-card-text>
+      <h4>{{ article.title }}</h4>
+      <p>{{ article.content }}</p>
+    </b-card-text>
+  </b-card>
 </template>
 <script>
 export default {
-    props: {
-        form: {
-            type: Object,
-            default: 'Untitled',
-        },
+  props: {
+    article: {
+      type: Object,
+      default: 'Untitled',
     },
+  },
 }
 </script>
