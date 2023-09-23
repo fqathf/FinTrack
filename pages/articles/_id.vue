@@ -1,44 +1,23 @@
 <template>
-  <div>
-    <div class="container mt-3 w-75 d-flex justify-content-center flex-row py-5">
-      <div
-        class="container mt-2 w-50 d-flex justify-content-center align-items-start flex-column py-5"
-      >
-        <h1 class="text-left">
-          Ayo catat <br />
-          Keuanganmu di FinTrack!
-        </h1>
-        <button class="btn btn-primary mt-2">Catat Sekarang!</button>
+  <div class="py-4">
+    <div class="container">
+      <div v-for="article in articles" :key="article.id">
+        <div v-if="article.id == paramId">
+          <div class="container">
+            <h1>{{ article.title }}</h1>
+            <b-img class="rounded mx-auto d-block" style="width: 600px;" fluid :src="article.img"></b-img>
+            <p class="mt-3 mx-3">{{ article.content }}</p>
+          </div>
+        </div>
       </div>
-      <div class="container w-50 d-flex justify-content-end py-5">
-        <img
-          class="align-self-center"
-          src="../assets/animation_llpzpsh2_small.gif"
-          alt=""
-          style="height: 400px; width: 400px; z-index: -10"
-        />
-      </div>
-    </div>
-    <div class="container py-5">
-      <b-card-group deck style="overflow-x: scroll;">
-        <CardItem
-          v-for="(article, i) in resultQuery"
-          :key="i"
-          :article="article"
-        />
-      </b-card-group>
     </div>
   </div>
 </template>
 <script>
-import CardItem from '@/components/Card/CardItem.vue'
-
 export default {
-  components: {
-    CardItem,
-  },
   data() {
     return {
+      paramId: this.$route.params.id,
       articles: [
         {
           id: 1,
@@ -64,11 +43,5 @@ export default {
       ],
     }
   },
-  computed: {
-    resultQuery() {
-      return this.articles
-    }
-  },
 }
 </script>
-<style></style>
